@@ -17,7 +17,7 @@ def convert_from_base_36_char(value: str):
 
 
 def format_address(mode_s_address: int):
-    return f"0x{hex(mode_s_address)[2:].upper().zfill(2)}"
+    return f"{hex(mode_s_address)[2:].upper()}"
 
 
 def output_all_mode_s_addresses():
