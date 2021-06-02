@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import argparse
 
-
 # Copyright 2021 Matt Ames
+# Huge thanks to Matt Evans <matt@mattevans.email> https://github.com/Matty666/ for the complete re-write!
 
 # Quick bit of Python to programmatically convert a Mode S address into an Austrailan VH- ICAO registration.
 # Note the second and third characters count to 36 instead of 26.
@@ -54,7 +54,6 @@ args = parser.parse_args()
 if not args.vh and not args.mode_s:
     parser.print_help()
     exit(1)
-
 
 if args.vh:
     vh = args.vh.upper()
