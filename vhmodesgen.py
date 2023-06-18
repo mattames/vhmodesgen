@@ -5,7 +5,9 @@ import argparse
 # Copyright Matt Evans <matt@mattevans.email> https://github.com/Matty666/ - thanks for the complete re-write!
 
 # Quick bit of Python to programmatically convert a Mode S address into an Austrailan VH- ICAO registration.
-# Note the second and third characters count to 36 instead of 26.
+# Note the second and third characters count to 36 instead of 26 - since this has been first published, it was
+# discovered that this is due to CASA issuing registrations with numbers in them as well as letters, e.g. a
+# valid callsign would be VH-X3V.
 
 
 def convert_to_base_36_char(value: int):
