@@ -9,6 +9,8 @@ import argparse
 # discovered that this is due to CASA issuing registrations with numbers in them as well as letters, e.g. a
 # valid callsign would be VH-X3V.
 
+# Australian Mode S addresses are assigned the range 0x7C0000 to 0x7F0000 
+# ref - https://www.raa.asn.au/storage/1-standard-letter-modes-xpdr-programming-2015-2.pdf
 
 def convert_to_base_36_char(value: int):
     return chr(value + 0x41) if value < 26 else chr(value + 0x30 - 26)
