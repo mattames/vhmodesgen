@@ -23,7 +23,7 @@ def format_address(mode_s_address: int):
 
 
 def output_all_mode_s_addresses():
-    for mode_s_address in range(0x7C0000, 0x7C822D):
+    for mode_s_address in range(0x7C0000, (0x7CB63F + 1)):
         address = format_address(mode_s_address)
 
         print(f"{address}  {convert_to_vh(address)}")
@@ -51,9 +51,11 @@ parser.add_argument("--vh", "-vh", action="store", dest="vh", help="Convert VH r
                                                                    "mode s address")
 parser.add_argument("--mode-s", "-s", action="store", dest="mode_s", help="Convert mode s address in format "
                                                                           "'0x7CXXXX' to VH reg")
+parser.add_argument("--all", "-a", action="store_true", help="Output all mode s addresses")
+
 args = parser.parse_args()
 
-if not args.vh and not args.mode_s:
+if not args.vh and not args.mode_s and not args.all:
     parser.print_help()
     exit(1)
 
@@ -64,3 +66,6 @@ if args.vh:
 if args.mode_s:
     mode_s = args.mode_s.upper()
     print(f"{mode_s} : {convert_to_vh(mode_s)}")
+
+if args.all:
+    output_all_mode_s_addresses()
