@@ -12,6 +12,20 @@ import argparse
 # Australian Mode S addresses are assigned the range 0x7C0000 to 0x7F0000 
 # ref - https://www.raa.asn.au/storage/1-standard-letter-modes-xpdr-programming-2015-2.pdf
 
+# Some observed ranges are:-
+# 7CF0xx - ground
+# 7CF3xx - ground
+# 7CF4xx - ground
+# 7CF5xx - ???
+# 7CF6xx - ground
+# 7CF7CA - SSM1 TWR		
+# 7CF7CB - SSM2	TWR		
+# 7CF7CC - SSM3	TWR		
+# 7CF7CD - SSM4 TWR		
+# 7CF8xx - Military
+# 7CF9xx - Military
+# 7CFAxx - Military
+
 def convert_to_base_36_char(value: int):
     return chr(value + 0x41) if value < 26 else chr(value + 0x30 - 26)
 
