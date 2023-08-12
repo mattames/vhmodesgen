@@ -14,17 +14,24 @@ import argparse
 
 # Some observed ranges are:-
 # 7CF0xx - ground
+# 7CF1xx - ???
+# 7CF2xx - ???
 # 7CF3xx - ground
 # 7CF4xx - ground
 # 7CF5xx - ???
 # 7CF6xx - ground
-# 7CF7CA - SSM1 TWR		
-# 7CF7CB - SSM2	TWR		
-# 7CF7CC - SSM3	TWR		
-# 7CF7CD - SSM4 TWR		
+# 7CF7CA	Australia	SSM1	TWR	ground	5	16.2		
+# 7CF7CB	Australia	SSM2	TWR	ground	3	16.1		
+# 7CF7CC	Australia	SSM3	TWR	ground	9	20.6		
+# 7CF7CD	Australia	SSM4	TWR	ground	4	33.6		
 # 7CF8xx - Military
 # 7CF9xx - Military
 # 7CFAxx - Military
+# 7CFBxx - ???
+# 7CFCxx - ??
+# 7CFDxx - Gyroscopes seen in this range
+# 7CFExx - ??
+# 7CFFxx - ??
 
 def convert_to_base_36_char(value: int):
     return chr(value + 0x41) if value < 26 else chr(value + 0x30 - 26)
