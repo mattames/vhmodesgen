@@ -40,6 +40,15 @@ import argparse
 # 7CFExx - ??
 # 7CFFxx - ??
 
+# The address space goes into special characters at the following address, which is the start of the special / not assigned for registereed aircraft range:- 
+#
+# 7CB640  VH-:AA
+#
+# This special range then overflows back into the regular VH-AAA range here:-
+# 7CD9B0  VH-AAA
+# 7CFFFF  VH-HUP
+
+
 def convert_to_base_36_char(value: int):
     return chr(value + 0x41) if value < 26 else chr(value + 0x30 - 26)
 
