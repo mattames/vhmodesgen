@@ -9,8 +9,15 @@ import argparse
 # discovered that this is due to CASA issuing registrations with numbers in them as well as letters, e.g. a
 # valid callsign would be VH-X3V.
 
-# Australian Mode S addresses are assigned the range 0x7C0000 to 0x7F0000 
-# ref - https://www.raa.asn.au/storage/1-standard-letter-modes-xpdr-programming-2015-2.pdf
+# Australian Mode S addresses are assigned the range 0x7C0000 to 0x7FFFFF 
+# ref - https://www.icao.int/WACAF/Documents/Meetings/2023/Workshop-24-Bits/Guidelines%20for%20ICAO%2024%20Bits%20Adresses%20Assignment.pdf
+#
+# APPENDIX A - Table 9-1. Allocation of aircraft addresses to States 
+#
+# Australian bit mask - 0111 1––– –––– –––– –––– –––– 
+#
+# Range is 0x7C0000 to 0x7FFFF
+
 
 # Some observed ranges are:-
 # 7CF0xx - ground
@@ -46,7 +53,7 @@ def format_address(mode_s_address: int):
 
 
 def output_all_mode_s_addresses():
-    for mode_s_address in range(0x7C0000, (0x7CB63F + 1)):
+    for mode_s_address in range(0x7C0000, (0x7CFFFF + 1)):  # Upper limit was (0x7CF63F + 1)
         address = format_address(mode_s_address)
 
         print(f"{address}  {convert_to_vh(address)}")
