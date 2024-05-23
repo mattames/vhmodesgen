@@ -35,10 +35,11 @@ import argparse
 # 7CF9xx - Military
 # 7CFAxx - Military
 # 7CFBxx - ???
-# 7CFCxx - ??
+# 7CFCxx - Gyrocopters seen in this range
 # 7CFDxx - Gyrocopters seen in this range
 # 7CFExx - ??
 # 7CFFxx - ??
+# 7D00xx - Gyrocopters seen in this range
 
 # The address space goes into special characters at the following address, which is the start of the special / not assigned for registereed aircraft range:- 
 #
@@ -47,6 +48,15 @@ import argparse
 # This special range then overflows back into the regular VH-AAA range here:-
 # 7CD9B0  VH-AAA
 # 7CFFFF  VH-HUP
+
+# Some of the RAAus IDs:-
+# 7CBBFE - R1722 - 19-1722
+# 7CC3B7 - R8563 - 24-8563
+# 7CC3EF - R8735 - 24-8735
+# 7CC45C - R9081 - 23-9081
+# 7CC502 - R8845 - 23-8845
+# 7CC5EC - R7010 - 24-7010
+# 7CC50F - R1675 - 23-1675
 
 
 def convert_to_base_36_char(value: int):
