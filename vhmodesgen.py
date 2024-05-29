@@ -11,11 +11,11 @@ import argparse
 
 # Australian Mode S addresses are assigned the range 0x7C0000 to 0x7FFFFF 
 # ref - https://www.icao.int/WACAF/Documents/Meetings/2023/Workshop-24-Bits/Guidelines%20for%20ICAO%2024%20Bits%20Adresses%20Assignment.pdf
-#
+
 # APPENDIX A - Table 9-1. Allocation of aircraft addresses to States 
-#
+
 # Australian bit mask - 0111 1––– –––– –––– –––– –––– 
-#
+
 # Range is 0x7C0000 to 0x7FFFF
 
 
@@ -42,9 +42,9 @@ import argparse
 # 7D00xx - Gyrocopters seen in this range
 
 # The address space goes into special characters at the following address, which is the start of the special / not assigned for registereed aircraft range:- 
-#
+
 # 7CB640  VH-:AA
-#
+
 # This special range then overflows back into the regular VH-AAA range here:-
 # 7CD9B0  VH-AAA
 # 7CFFFF  VH-HUP
@@ -57,6 +57,10 @@ import argparse
 # 7CC502 - R8845 - 23-8845
 # 7CC5EC - R7010 - 24-7010
 # 7CC50F - R1675 - 23-1675
+#
+# Other random stuff:-
+# 7CB647 - FLTDES1 - balloon of some type
+
 
 
 def convert_to_base_36_char(value: int):
