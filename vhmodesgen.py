@@ -25,7 +25,7 @@ import argparse
 # 7CF2xx - ???
 # 7CF3xx - ground
 # 7CF4xx - ground
-# 7CF5xx - ???
+# 7CF5xx - ground
 # 7CF6xx - ground
 # 7CF7CA - SSM1	TWR
 # 7CF7CB - SSM2 TWR
