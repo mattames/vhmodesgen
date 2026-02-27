@@ -10,8 +10,8 @@ import argparse
 # valid callsign would be VH-X3V.
 
 # Australian Mode S addresses are assigned the range 0x7C0000 to 0x7FFFFF 
-# ref - https://www.icao.int/WACAF/Documents/Meetings/2023/Workshop-24-Bits/Guidelines%20for%20ICAO%2024%20Bits%20Adresses%20Assignment.pdf
 # ref - https://www2023.icao.int/WACAF/Documents/Meetings/2023/Workshop-24-Bits/Guidelines%20for%20ICAO%2024%20Bits%20Adresses%20Assignment.pdf
+# ref - https://www.icao.int/sites/default/files/ESAF/APIRG/APIRG-26/EN/WPs-ENG/APIRG26-WP03F12-App-Guidelines-for-ICAO-24-Bits-Adresses-Assignment.pdf
 
 # APPENDIX A - Table 9-1. Allocation of aircraft addresses to States 
 
