@@ -27,10 +27,10 @@ import argparse
 # 7CF4xx - ground
 # 7CF5xx - ground
 # 7CF6xx - ground
-# 7CF7CA - SSM1	TWR
-# 7CF7CB - SSM2 TWR
-# 7CF7CC - SSM3 TWR
-# 7CF7CD - SSM4 TWR
+# 7CF7CA - SSM1	TWR (Squawk code 7712)
+# 7CF7CB - SSM2 TWR (Squawk code 7722)
+# 7CF7CC - SSM3 TWR (Squawk code 7727)
+# 7CF7CD - SSM4 TWR (Squawk code 7717)
 # 7CF8xx - Military
 # 7CF9xx - Military
 # 7CFAxx - Military
