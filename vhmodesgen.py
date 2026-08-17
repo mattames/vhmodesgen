@@ -17,7 +17,14 @@ import argparse
 # Australian bit mask - 0111 11–– –––– –––– –––– ––––
 
 # Range is 0x7C0000 to 0x7FFFFF
-
+#
+# Structure of the registrable space - marks are three base-36 characters:
+#
+#   7C0000 - 7CB63F   all 46656 possible marks (36^3), VH-AAA to VH-999
+#   7C822D            VH-ZZZ, highest all-letters mark
+#   7C839F            VH-Z99, highest mark starting with a letter
+#   7C83A0 - 7CAC1F   VH-0AA to VH-799, leading 0-7, effectively unused
+#   7CAC20 - 7CB63F   VH-8AA to VH-999, the pool CASA issues from now
 
 # Some observed ranges are:-
 # 7CF0xx - ground
