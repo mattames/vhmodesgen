@@ -4,8 +4,8 @@ import argparse
 # Copyright Matt Ames <matt.ames7bc@gmail.com>
 # Copyright Matt Evans <matt@mattevans.email> https://github.com/Matty666/ - thanks for the complete re-write!
 
-# Quick bit of Python to programmatically convert a Mode S address into an Austrailan VH- ICAO registration.
-# Note that since this qwas first published, CASA started issuing akphanumeric callsigns - for example a new
+# Quick bit of Python to programmatically convert a Mode S address into an Australian VH- ICAO registration.
+# Note that since this was first published, CASA started issuing alphanumeric callsigns - for example a new
 # valid callsign could be VH-X3V. A new range of callsigns has begun being assigned starting with VH-8AA
 
 # Australian Mode S addresses are assigned the range 0x7C0000 to 0x7FFFFF 
