@@ -6,7 +6,8 @@ import argparse
 
 # Quick bit of Python to programmatically convert a Mode S address into an Australian VH- ICAO registration.
 # Note that since this was first published, CASA started issuing alphanumeric callsigns - for example a new
-# valid callsign could be VH-X3V. A new range of callsigns has begun being assigned starting with VH-8AA
+# valid callsign could be VH-X3V. CASA started issuing new callsigns starting with VH-8AA when the alpha only
+# range became exhausted.
 
 # Australian Mode S addresses are assigned the range 0x7C0000 to 0x7FFFFF 
 # ref - https://www2023.icao.int/WACAF/Documents/Meetings/2023/Workshop-24-Bits/Guidelines%20for%20ICAO%2024%20Bits%20Adresses%20Assignment.pdf
