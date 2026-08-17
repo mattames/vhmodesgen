@@ -107,11 +107,11 @@ parser.add_argument("--mode-s", "-s", action="store", dest="mode_s", help="Conve
                                                                           "'0x7CXXXX' to VH reg")
 parser.add_argument("--all", "-a", action="store_true", help="Output all mode s addresses")
 
-try:
-    args = parser.parse_args()
-except:
+args = parser.parse_args()
+
+if not (args.vh or args.mode_s or args.all):
     parser.print_help()
-    exit(0)
+    parser.exit(0)
 
 if args.vh:
     vh = args.vh.upper()
