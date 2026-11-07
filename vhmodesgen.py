@@ -3,19 +3,20 @@ import argparse
 
 # Copyright Matt Ames <matt.ames7bc@gmail.com>
 # Copyright Matt Evans <matt@mattevans.email> https://github.com/Matty666/ - thanks for the complete re-write!
-
+# SPDX-License-Identifier: MIT
+#
 # Quick bit of Python to programmatically convert a Mode S address into an Australian VH- ICAO registration.
 # Note that since this was first published, around October 2022, CASA started issuing alphanumeric callsigns.
 # A valid callsign could be, for example, VH-X3V.
-
+#
 # Australian Mode S addresses are assigned the range 0x7C0000 to 0x7FFFFF 
 # ref - https://www2023.icao.int/WACAF/Documents/Meetings/2023/Workshop-24-Bits/Guidelines%20for%20ICAO%2024%20Bits%20Adresses%20Assignment.pdf
 # ref - https://www.icao.int/sites/default/files/ESAF/APIRG/APIRG-26/EN/WPs-ENG/APIRG26-WP03F12-App-Guidelines-for-ICAO-24-Bits-Adresses-Assignment.pdf
-
+#
 # APPENDIX A - Table 9-1. Allocation of aircraft addresses to States 
-
+#
 # Australian bit mask - 0111 11–– –––– –––– –––– ––––
-
+#
 # Range is 0x7C0000 to 0x7FFFFF
 #
 # Structure of the registrable space - marks are three base-36 characters:
@@ -25,7 +26,7 @@ import argparse
 #   7C839F            VH-Z99, highest mark starting with a letter
 #   7C83A0 - 7CAC1F   VH-0AA to VH-799, leading 0-7, effectively unused
 #   7CAC20 - 7CB63F   VH-8AA to VH-999, the pool CASA issues from now
-
+#
 # Some observed ranges are:-
 # 7CF0xx - ground
 # 7CF1xx - ???
@@ -47,15 +48,15 @@ import argparse
 # 7CFExx - ??
 # 7CFFxx - ??
 # 7D00xx - Gyrocopters seen in this range
-
+#
 # The address space goes into special characters at the following address, which is the start of the special / not assigned for registereed aircraft range:- 
-
+#
 # 7CB640  VH-:AA
-
+#
 # This special range then overflows back into the regular VH-AAA range here:-
 # 7CD9B0  VH-AAA
 # 7CFFFF  VH-HUP
-
+#
 # Some of the RAAus IDs:-
 # 7CBBFE - R1722 - 19-1722
 # 7CC3B7 - R8563 - 24-8563
@@ -75,11 +76,12 @@ def convert_to_base_36_char(value: int):
 
 
 def convert_from_base_36_char(value: str):
-    return ord(value) - 0x30 + 26 if ord(value) <= 0x39 else ord(value) - 0x41
+    code = ord(value.upper())
+    return code - 0x30 + 26 if code <= 0x39 else code - 0x41
 
 
 def format_address(mode_s_address: int):
-    return f"{hex(mode_s_address)[2:].upper()}"
+    return f"{hex(mode_s_address)[2:].lower()}"
 
 
 def output_all_mode_s_addresses():
@@ -120,11 +122,11 @@ if not (args.vh or args.mode_s or args.all):
     parser.exit(0)
 
 if args.vh:
-    vh = args.vh.upper()
+    vh = args.vh.lower()
     print(f"{vh} : {convert_to_mode_s(vh)}")
 
 if args.mode_s:
-    mode_s = args.mode_s.upper()
+    mode_s = args.mode_s.lower()
     print(f"{mode_s} : {convert_to_vh(mode_s)}")
 
 if args.all:
