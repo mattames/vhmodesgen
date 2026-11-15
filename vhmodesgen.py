@@ -71,6 +71,13 @@ import argparse
 
 
 
+import sys
+
+VH_FIRST = 0x7C0000                 # VH-AAA
+VH_LAST = VH_FIRST + 36 ** 3 - 1    # 0x7CB63F, VH-999
+BASE_36 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+
 def convert_to_base_36_char(value: int):
     return chr(value + 0x41) if value < 26 else chr(value + 0x30 - 26)
 
@@ -85,19 +92,33 @@ def format_address(mode_s_address: int):
 
 
 def output_all_mode_s_addresses():
+    # Deliberately walks past VH-999 to show how the raw arithmetic behaves
+    # above 7CB63F (see the notes at the top of this file).
     for mode_s_address in range(0x7C0000, (0x7CFFFF + 1)):  # Upper limit was (0x7CB63F + 1)
         address = format_address(mode_s_address)
 
         print(f"{address}  {convert_to_vh(address)}")
 
 
+def normalise_vh(vh: str):
+    """Accept 'VH-TKV', 'VHTKV' or 'TKV' (any case); return the three-character
+    mark in upper case, or None if it isn't a valid VH- mark."""
+    mark = vh.strip().upper().replace("-", "")
+    if len(mark) == 5 and mark.startswith("VH"):
+        mark = mark[2:]
+    if len(mark) != 3 or any(c not in BASE_36 for c in mark):
+        return None
+    return mark
+
+
 def convert_to_mode_s(vh: str):
-    if len(vh) == 6:
-        l = convert_from_base_36_char(vh[3]) * (36 ** 2)
-        m = convert_from_base_36_char(vh[4]) * 36
-        r = convert_from_base_36_char(vh[5])
-        return format_address((l + m + r) | 0x7C0000)
-    return ""
+    mark = normalise_vh(vh)
+    if mark is None:
+        return ""
+    l = convert_from_base_36_char(mark[0]) * (36 ** 2)
+    m = convert_from_base_36_char(mark[1]) * 36
+    r = convert_from_base_36_char(mark[2])
+    return format_address((l + m + r) | 0x7C0000)
 
 
 def convert_to_vh(mode_s: str):
@@ -108,26 +129,57 @@ def convert_to_vh(mode_s: str):
     return f"VH-{convert_to_base_36_char(l)}{convert_to_base_36_char(m)}{convert_to_base_36_char(r)}"
 
 
-parser = argparse.ArgumentParser(description='Convert from mode s address to VH- ICAO registrations')
-parser.add_argument("--vh", "-vh", action="store", dest="vh", help="Convert VH reg in format 'VH-XXX' to "
-                                                                   "mode s address")
-parser.add_argument("--mode-s", "-s", action="store", dest="mode_s", help="Convert mode s address in format "
-                                                                          "'0x7CXXXX' to VH reg")
-parser.add_argument("--all", "-a", action="store_true", help="Output all mode s addresses")
+def is_vh_address(mode_s: str):
+    """True if the address is in 7C0000-7CB63F, the part of Australia's block
+    that maps one-to-one onto VH- marks."""
+    try:
+        return VH_FIRST <= int(mode_s, 16) <= VH_LAST
+    except ValueError:
+        return False
 
-args = parser.parse_args()
 
-if not (args.vh or args.mode_s or args.all):
-    parser.print_help()
-    parser.exit(0)
+def main(argv=None):
+    import argparse
 
-if args.vh:
-    vh = args.vh.lower()
-    print(f"{vh} : {convert_to_mode_s(vh)}")
+    parser = argparse.ArgumentParser(description='Convert from mode s address to VH- ICAO registrations')
+    parser.add_argument("--vh", "-vh", action="store", dest="vh", help="Convert VH reg in format 'VH-XXX', "
+                                                                       "'VHXXX' or 'XXX' to mode s address")
+    parser.add_argument("--mode-s", "-s", action="store", dest="mode_s", help="Convert mode s address in format "
+                                                                              "'0x7CXXXX' to VH reg")
+    parser.add_argument("--all", "-a", action="store_true", help="Output all mode s addresses")
 
-if args.mode_s:
-    mode_s = args.mode_s.lower()
-    print(f"{mode_s} : {convert_to_vh(mode_s)}")
+    args = parser.parse_args(argv)
 
-if args.all:
-    output_all_mode_s_addresses()
+    if not (args.vh or args.mode_s or args.all):
+        parser.print_help()
+        parser.exit(0)
+
+    status = 0
+
+    if args.vh:
+        vh = args.vh.lower()
+        address = convert_to_mode_s(vh)
+        if address:
+            print(f"{vh} : {address}")
+        else:
+            print(f"{vh} : not a valid VH- mark (expected VH-XXX, VHXXX or XXX using A-Z and 0-9)",
+                  file=sys.stderr)
+            status = 1
+
+    if args.mode_s:
+        mode_s = args.mode_s.lower()
+        if is_vh_address(mode_s):
+            print(f"{mode_s} : {convert_to_vh(mode_s)}")
+        else:
+            print(f"{mode_s} : not a VH- mark address (VH-AAA to VH-999 is "
+                  f"{format_address(VH_FIRST)} to {format_address(VH_LAST)})", file=sys.stderr)
+            status = 1
+
+    if args.all:
+        output_all_mode_s_addresses()
+
+    return status
+
+
+if __name__ == "__main__":
+    sys.exit(main())
