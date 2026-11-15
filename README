@@ -2,3 +2,48 @@ Quick bit of Python to programmatically convert a Mode S / ADS-B address into an
 
 Licensed under the MIT License - see the LICENSE file for the full text.
 Copyright (c) 2021-2026 Matt Ames and Matt Evans.
+
+Usage
+-----
+
+  python3 vhmodesgen.py --vh VH-TKV      # also accepts VHTKV or TKV
+  vh-tkv : 7c61ad
+
+  python3 vhmodesgen.py -s 7c61ad
+  7c61ad : VH-TKV
+
+  python3 vhmodesgen.py --all            # every address 7c0000-7cffff
+
+-s only converts addresses in 7c0000-7cb63f (VH-AAA to VH-999). Anything else,
+or an invalid mark given to --vh, prints a message and exits with status 1.
+--all still walks the whole 7c0000-7cffff range, as described in the notes at
+the top of vhmodesgen.py.
+
+The functions can be imported (import vhmodesgen) without running the command line.
+
+Checking Mode S / ADS-B frames
+------------------------------
+
+modes_frame.py checks whether a received frame belongs to a VH- aircraft:
+
+  python3 modes_frame.py 8D7C61AD2150B5A0820820B9C954 VH-TKV
+  DF17 AA=7C61AD (VH-TKV) parity OK, TC=4, flight ID 'TKV', emitter A1 -> MATCHES VH-TKV (7C61AD)
+
+It checks the CRC, reads the address from DF11/DF17, recovers it from the
+Address/Parity field of DF0/4/5/16/20/21, and for DF17 identification messages
+compares the flight ID with the registration. An address recovered from a short
+reply isn't proof on its own: a corrupted DF4/DF5 gives a different address
+rather than a failed check, so look for a DF11 or DF17 with good parity.
+
+  python3 modes_frame.py --examples      # synthetic test frames for VH-TKV
+
+The encoders (DF4, DF5, DF11, DF17 TC 4/9-18/19/31) build test frames; they are
+checked against pyModeS in the tests. modes_frame.py itself needs only the
+standard library.
+
+Tests
+-----
+
+  python3 -m unittest -v test_vhmodesgen
+
+The pyModeS cross-check runs only if pyModeS 3.x is installed (pip install pyModeS).
